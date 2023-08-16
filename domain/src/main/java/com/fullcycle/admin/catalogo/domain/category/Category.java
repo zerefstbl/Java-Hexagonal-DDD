@@ -5,7 +5,7 @@ import java.time.Instant;
 import com.fullcycle.admin.catalogo.domain.AggregateRoot;
 import com.fullcycle.admin.catalogo.domain.validation.ValidationHandler;
 
-public class Category extends AggregateRoot<CategoryId> {
+public class Category extends AggregateRoot<CategoryId> implements Cloneable {
     private String name;
     private String description;
     private boolean active;
@@ -43,6 +43,18 @@ public class Category extends AggregateRoot<CategoryId> {
         return new Category(id, aName, aDescription, aIsActive, now, now, aDeletedAt);
     }
 
+
+    public static Category with(final Category aCategory) {
+        return new Category(
+                aCategory.getId(),
+                aCategory.name,
+                aCategory.description,
+                aCategory.isActive(),
+                aCategory.createdAt,
+                aCategory.updatedAt,
+                aCategory.deletedAt
+        );
+    }
 
     @Override
     public void validate(ValidationHandler handler) {
@@ -144,5 +156,13 @@ public class Category extends AggregateRoot<CategoryId> {
         this.deletedAt = deletedAt;
     }
 
+    @Override
+    public Category clone() {
+        try {
+            return (Category) super.clone();
+        } catch (CloneNotSupportedException e) {
+            throw new AssertionError();
+        }
+    }
 
 }

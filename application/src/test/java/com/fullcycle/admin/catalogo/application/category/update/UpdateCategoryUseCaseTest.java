@@ -1,6 +1,8 @@
 package com.fullcycle.admin.catalogo.application.category.update;
 
 
+import com.fullcycle.admin.catalogo.application.Category.update.DefaultUpdateCategoryUseCase;
+import com.fullcycle.admin.catalogo.application.Category.update.UpdateCategoryCommand;
 import com.fullcycle.admin.catalogo.domain.category.Category;
 import com.fullcycle.admin.catalogo.domain.category.CategoryGateway;
 import org.junit.jupiter.api.Assertions;
@@ -38,7 +40,7 @@ public class UpdateCategoryUseCaseTest {
         final var aCommand = UpdateCategoryCommand.with(expectedId.getValue(), expectedName, expectedDescription, expectedIsActive);
 
         Mockito.when(categoryGateway.findById(Mockito.eq(expectedId)))
-                .thenReturn(Optional.of(aCategory));
+                .thenReturn(Optional.of(Category.with(aCategory)));
 
         Mockito.when(categoryGateway.update(Mockito.any()))
                 .thenAnswer(returnsFirstArg());
@@ -46,7 +48,7 @@ public class UpdateCategoryUseCaseTest {
         final var actualOutPut = useCase.execute(aCommand).get();
 
         Assertions.assertNotNull(actualOutPut);
-        Assertions.assertNotNull(actualOutPut.getId());
+        Assertions.assertNotNull(actualOutPut.id());
 
         Mockito.verify(categoryGateway, Mockito.times(1)).findById(Mockito.eq(expectedId));
         Mockito.verify(categoryGateway, Mockito.times(1)).update(Mockito.argThat(aUpdatedCategory ->
