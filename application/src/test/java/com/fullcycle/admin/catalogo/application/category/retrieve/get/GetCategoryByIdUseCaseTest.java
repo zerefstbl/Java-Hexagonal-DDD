@@ -1,5 +1,6 @@
-package com.fullcycle.admin.catalogo.application.category.retrieve;
+package com.fullcycle.admin.catalogo.application.category.retrieve.get;
 
+import com.fullcycle.admin.catalogo.application.Category.retrieve.get.DefaultGetCategoryByIdUseCase;
 import com.fullcycle.admin.catalogo.domain.category.Category;
 import com.fullcycle.admin.catalogo.domain.category.CategoryGateway;
 import com.fullcycle.admin.catalogo.domain.category.CategoryId;
@@ -20,11 +21,11 @@ public class GetCategoryByIdUseCaseTest {
 
 
     @Mock
-    private DefaultGetCategoryByIdUseCase useCase;
+    private CategoryGateway categoryGateway;
 
 
     @InjectMocks
-    private CategoryGateway categoryGateway;
+    private DefaultGetCategoryByIdUseCase useCase;
 
 
     @BeforeEach
@@ -59,9 +60,9 @@ public class GetCategoryByIdUseCaseTest {
 
     @Test
     public void givenAInvalidId_whenCallsGetCategory_shouldBeReturnNotFound() {
-        final var expectedErrorMessage = "";
-
         final var expectedId = CategoryId.from("124");
+
+        final var expectedErrorMessage = "Category with this ID %s was not found".formatted(expectedId);
 
         Mockito.when(categoryGateway.findById(Mockito.eq(expectedId)))
                 .thenReturn(Optional.empty());
