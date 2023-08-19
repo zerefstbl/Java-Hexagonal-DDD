@@ -1,14 +1,13 @@
 package com.fullcycle.admin.catalogo.infrastructure;
 
-import com.fullcycle.admin.catalogo.application.UseCase;
+import com.fullcycle.admin.catalogo.infrastructure.configuration.WebServerConfig;
+import org.springframework.boot.SpringApplication;
+import org.springframework.boot.autoconfigure.SpringBootApplication;
 
-// Press Shift twice to open the Search Everywhere dialog and type `show whitespaces`,
-// then press Enter. You can now see whitespace characters in your code.
+@SpringBootApplication
 public class Main {
     public static void main(String[] args) {
-
         System.out.println("Hello World!");
-//        System.out.println(new UseCase().execute());
-
+        SpringApplication.run(WebServerConfig.class, args);
     }
 }
